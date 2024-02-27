@@ -1,70 +1,74 @@
-*{
+* {
     margin: 0;
     padding: 0;
     /* background-color: rgb(210, 203, 203); */
 }
 
-.header,
-.main,
-footer{
-    background-color: rgb(210, 203, 203);
+.header, .main, footer {
+    background-color: rgb(233, 227, 227);
 }
 
-
-.header__logo{
+.header__logo {
     display: flex;
     justify-content: center;
-    align-items: center;    
+    align-items: center;
+
+    p {
+
+        font-size: 22px;
+        padding-top: 22px;
+    }
 }
 
-.header__logo img{
-    width: 15%;
-    padding-top: 20px;
-}
 .promo__image {
     position: relative;
-}
-.promo__image img{
-    width: 95%;
-    padding: 2%;
-    border-radius: 35px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    color: rgba(220, 228, 227, 0.977);
+    font-style: italic;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    img {
+        width: 93%;
+        padding: 4%;
+    }
+
+    h1 {
+       
+        position: absolute;
+        top: 42%;
+        left: 80px;
+        font-size: 30px;
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 2px 2px rgb(22, 22, 22);
+        font-weight: bold;
+    }
+
+    p {
+        position: absolute;
+        top: 50%;
+        left: 140px;
+        font-size: 20px;
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 2px 2px rgb(73, 71, 71);
+        font-weight: bold;
+    }
 }
 
-.promo__image h1 {
-    position: absolute;
-    top: 35%; 
-    left: 80px; 
-    font-size: 42px; 
-    color: white;
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 2px 2px rgb(22, 22, 22);
-    font-weight: bold;
-}
-.promo__image p{
-    position: absolute;
-    top: 45%; 
-    left: 89px; 
-    font-size: 20px; 
-    color: white;
-    letter-spacing: 2px;  
-    text-shadow: 2px 2px 2px 2px rgb(73, 71, 71);
-    font-weight: bold;
-} 
-
-.btns{
+.btns {
+    font-family: 'Times New Roman', Times, serif;
     display: flex;
     justify-content: center;
     padding: 20px;
-}
-.next-page {
-    width: 200px;
-    height: 50px;
-    border-radius: 20px;
-    border: none;
-    cursor: pointer;
-    font-size: 20px;
-}
 
-.next-page:hover{
-    background: rgba(128, 128, 128, 0.404);
+    .next-page {
+        width: 200px;
+        height: 50px;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+
+        &:hover {
+            background: rgba(128, 128, 128, 0.404);
+        }
+    }
 }
