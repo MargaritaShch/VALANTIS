@@ -9,3 +9,9 @@
   <li>ability to filter the output using the provided api by name, price and branda </li>
 </ul>
 <p>If API returns duplicates by id, they should be considered as one product and output only the first one, even if other fields are different. If the API returns an error, you should output the error identifier to the console, if any, and repeat the request.</p>
+
+## Tools :
+<ul align ="start">
+  <li>JavaScript </li>
+  <li>SCSS </li>
+</ul>
