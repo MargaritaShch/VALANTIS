@@ -14,8 +14,7 @@
     align-items: center;
 
     p {
-
-        font-size: 22px;
+        font-size: 25px;
         padding-top: 22px;
     }
 }
@@ -28,11 +27,10 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     img {
         width: 93%;
-        padding: 4%;
+        padding: 40px;
     }
 
     h1 {
-       
         position: absolute;
         top: 42%;
         left: 80px;
@@ -71,4 +69,20 @@
             background: rgba(128, 128, 128, 0.404);
         }
     }
+.products-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.product{
+    width: 200px;
+    height: 300px;
+    
+    border: 1px solid black;
+
+    p{
+        color: black;
+    }
+}
 }
