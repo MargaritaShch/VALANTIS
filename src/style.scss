@@ -1,11 +1,13 @@
 * {
     margin: 0;
     padding: 0;
-    /* background-color: rgb(210, 203, 203); */
+    background-color: black;
+    color: rgb(217, 213, 213);
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .header, .main, footer {
-    background-color: rgb(233, 227, 227);
+    
 }
 
 .header__logo {
@@ -21,13 +23,13 @@
 
 .promo__image {
     position: relative;
-    font-family:Georgia, 'Times New Roman', Times, serif;
     color: rgba(220, 228, 227, 0.977);
     font-style: italic;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     img {
         width: 93%;
         padding: 40px;
+        opacity: 0.6;
     }
 
     h1 {
@@ -52,18 +54,20 @@
 }
 
 .btns {
-    font-family: 'Times New Roman', Times, serif;
+    
     display: flex;
     justify-content: center;
     padding: 20px;
 
     .next-page {
+        background: rgba(211, 209, 209, 0.404);
         width: 200px;
         height: 50px;
         border-radius: 20px;
         border: none;
         cursor: pointer;
         font-size: 18px;
+        color: black;
 
         &:hover {
             background: rgba(128, 128, 128, 0.404);
@@ -79,10 +83,10 @@
     width: 200px;
     height: 300px;
     
-    border: 1px solid black;
+    border: 1px solid rgb(193, 188, 188);
 
     p{
-        color: black;
+        color: rgb(206, 200, 200);
     }
 }
 }
