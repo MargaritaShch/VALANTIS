@@ -8,12 +8,14 @@ const limit = 50;
 async function getNextPage() {
     currentPage++;
     await PaginationPage(currentPage, limit);
+    scrollTop()
 }
 
 async function getPrevPage() {
     if (currentPage >0) {
         currentPage--;
         await PaginationPage(currentPage, limit);
+        scrollTop()
     }
 }
 
@@ -67,6 +69,9 @@ async function PaginationPage(page, limit){
     }
 }
 
+function scrollTop(){
+  containerProducts.scrollIntoView({ behavior: "smooth", block: "start" })
+}
 
 document.querySelector(".next-page").addEventListener("click", getNextPage);
 document.querySelector(".back-page").addEventListener("click", getPrevPage);
