@@ -1,3 +1,4 @@
+import '../style.scss';
 import { getProduct } from "../api/api";
 
 const containerProducts = document.querySelector(".products-container");

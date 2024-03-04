@@ -1,19 +1,19 @@
-const path = require('path'); // Импортируем модуль "path" для работы с путями файлов
+const path = require('path'); 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/script.js', // Точка входа для сборки проекта
+  entry: './src/script.js', 
 
   output: {
-    filename: 'bundle.js', // Имя выходного файла сборки
-    path: path.resolve(__dirname, 'dist'), // Путь для выходного файла сборки
+    filename: 'bundle.js', 
+    path: path.resolve(__dirname, 'dist'), 
   },
 
   module: {
     rules: [
       {
-        test: /\.scss$/, // Регулярное выражение для обработки файлов с расширением .scss
-        use: ['style-loader', 'css-loader', 'scss-loader'], // Загрузчики, используемые для обработки CSS-файлов
+        test: /\.scss$/, 
+        use: ['style-loader', 'css-loader', 'sass-loader'], 
       },
     ],
   },
@@ -26,10 +26,10 @@ module.exports = {
 
   devServer: {
     static: {
-      directory: path.join(__dirname, 'dist'), // Каталог для статики
+      directory: path.join(__dirname, 'dist'), 
     },
-    open: true, // Автоматически открывать браузер
+    open: true, 
   },
 
-  mode: 'development', // Режим сборки
+  mode: 'development', 
 };

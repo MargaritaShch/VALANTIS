@@ -1,3 +1,4 @@
+import '../style.scss';
 import { getProduct } from "../api/api.js";
 //get item
 
@@ -23,6 +24,7 @@ async function CreateProducts() {
 
           const nameProduct = document.createElement("p");
           nameProduct.textContent = product.product;
+  
           productElem.appendChild(nameProduct);
           console.log("Name product:", nameProduct);
 
