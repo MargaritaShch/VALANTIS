@@ -11,7 +11,7 @@
 <p>If API returns duplicates by id, they should be considered as one product and output only the first one, even if other fields are different. If the API returns an error, you should output the error identifier to the console, if any, and repeat the request.</p>
 
 ##  Documentation :
-<a href="https://github.com/ValantisJewelry/TestTaskValantis/tree/main?tab=readme-ov-file"> API </a>
+<a href="https://github.com/ValantisJewelry/TestTaskValantis/tree/main?tab=readme-ov-file"> Documentation on how to work with the API is attached </a>
 
 ## Tools :
 <ul align ="start">
