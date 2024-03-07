@@ -1,49 +1,58 @@
-import md5 from 'md5';
+import getPasswordHash from '../utils/authUtils.js';
 
-function getXAuth(password) {
-  const currentDate = new Date();
-  const year = currentDate.getFullYear();
-  const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
-  const day = String(currentDate.getDate()).padStart(2, '0'); 
-  const timestamp = `${year}${month}${day}`
-  const string = `${password}_${timestamp}`;
-  
-  console.log(string)
-  return md5(string);//Valantis_20240228
-}
+class API  {
+  constructor(){
+    this.requestUrl = "http://api.valantis.store:40000/";
+    this.password = "Valantis";
+    //set HTTP request headers
+    this.requestSettings = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    };
+  }
+  //send request: get action and params from API and create string format password
+  async fetchAPI(action, params) {
+    const XAUTH = getPasswordHash(this.password);
+    const body = { action, params };
+    const requestSettings = { ...this.requestSettings, body: JSON.stringify(body), headers: { ...this.requestSettings.headers, "X-Auth": XAUTH } };
+    console.log("RequestSettings", requestSettings)
+    try {
+        const response = await fetch(this.requestUrl, requestSettings);
+        console.log("RESPONSE:", response)
+        const data = await response.json();
+        console.log("DATA", data)
+        return data;
+    } catch (error) {
+        console.error("Error while retrieving data:", error);
+    }
+  }
 
-async function fetchAPI(action, params, password) {
-  const XAUTH = getXAuth(password);
-  
-  const requestSettings = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Auth": XAUTH,
-    },
-    body: JSON.stringify({ action, params }),
-};
-  console.log("RequestSettings",requestSettings)//{method: 'POST', X-Auth: 'ab2c87028e0a44d43658d891974542fb'}
+  async getProductsList(params) {
+    const ids = await this.getIDS();
+    const products = await this.getProduct(ids);
+    return products;
+  }
 
-  try {
-    const response = await fetch("http://api.valantis.store:40000/", requestSettings);
-    console.log("RESPONSE:",response)//Response {type: 'cors', url: 'http://api.valantis.store:40000/', redirected: false, status: 401, ok: false, …}
-    const data = await response.json();
-    // упорядоченный список идентификаторов товаров
-    console.log("DATA", data)//["18e4e3bd-5e60-4348-8c92-4f61c676be1f","711837ec-57f6-4145-b17f-c74c2896bafe","6c972a4a-5b91-4a98-9780-3a19a7f41560"]
-    return data;
-  } catch (error) {
-    console.error("Error while retrieving data:", error);
+  async getIDS() {
+    try {
+        const response = await this.fetchAPI("get_ids", { offset: 0, limit: 5 });
+        return response.result;
+    } catch (error) {
+        console.error("Error while retrieving IDS:", error);
+    }
+  }
+
+  async getProduct(ids) {
+    try {
+        const response = await this.fetchAPI("get_items", { ids });
+        return response.result;
+    } catch (error) {
+        console.error("Error while retrieving products:", error);
+    }
   }
 }
 
-async function getProduct(action, params, password) {
-  try {
-const data = await fetchAPI( action, params, password);
-    return data;
-  } catch (error) {
-    console.error("Error while retrieving data:", error);
-  }
-}
+export default API;
 
-export { fetchAPI, getProduct };

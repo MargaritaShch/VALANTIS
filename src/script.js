@@ -1,27 +1,14 @@
-import CreateProducts from "./Modules/CreateProducts.js";
 import './style.scss';
-import GetFilteredProducts from "./Modules/GetFilteredProducts.js";
+import ManagerProducts from "./Modules/ManagerProducts.js";
+import UI from "./Modules/UI.js";
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    CreateProducts();
-    document.querySelector(".search-btn").addEventListener("click", getFilters);
-      
-   
-})
-
-async function getFilters(){
-    const params ={}
-    const productName = document.querySelector(".productName").value;
-    const productPrice = parseFloat(document.querySelector(".productPrice").value);
-    const productBrand = document.querySelector(".productBrand").value;
-
-    if (productName) params.product = productName;
-    if (productPrice) params.price = productPrice;
-    if (productBrand) params.brand = productBrand;
-
-    await GetFilteredProducts(params)
-}
+    const ui = new UI()
+    ui.init()
+    const managerProducts = new ManagerProducts(".products-container", "Valantis"); 
+    managerProducts.renderProducts("get_items", []); 
+}) 
 
 
 
