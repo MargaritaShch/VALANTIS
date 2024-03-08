@@ -13,8 +13,9 @@
 ##  Documentation :
 <a href="https://github.com/ValantisJewelry/TestTaskValantis/tree/main?tab=readme-ov-file"> Documentation on how to work with the API is attached </a>
 
-## Tools :
+## Stack :
 <ul align ="start">
   <li>JavaScript </li>
   <li>SCSS </li>
+  <li>HTML </li>
 </ul>
