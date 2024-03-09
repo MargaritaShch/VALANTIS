@@ -72,8 +72,11 @@ main{
     font-size: 20px;
     outline: none;
     font-size: 16px;
+    max-height: 50px; 
+    overflow-y: auto;
 }
 .productPrice,.productBrand{
+   
     height: 37px;
     color: white;
 }

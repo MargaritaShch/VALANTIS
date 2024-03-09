@@ -57,8 +57,8 @@ class UI{
         try {
             const responseIds = await this.api.getIDS(); 
             await this.renderPage(this.currentPage, this.limit, responseIds);
-            // await this.getUniqPriceSelect();
-            // await this.getUniqBrandSelect();
+            await this.getUniqPriceSelect();
+            await this.getUniqBrandSelect();
         } catch (error) {
             console.error("Error while retrieving data:", error);
         }
@@ -128,7 +128,8 @@ class UI{
             });
 
             const prices = Array.from(uniquePrices).sort((a, b) => a - b);
-
+            
+            this.addOption(this.priceSelect, "", "Выберите цену");
             prices.forEach(price => {
                 this.addOption(this.priceSelect, price, price);
         });
@@ -140,14 +141,15 @@ class UI{
     async getUniqBrandSelect(){
         try {
             const response = await this.api.fetchAPI("get_fields", { field: "brand" });
+            console.log("БРЕНД Response :", response);
             const uniqueBrands = new Set();
-            // this.addOption(this.brandSelect, "", "Выберите бренд");
+            
             response.result.forEach(brand => {
-                if (brand && brand !== "-") {
+                if (brand && brand !== null) {
                     uniqueBrands.add(brand);
                 }
             });
-
+            this.addOption(this.brandSelect, "", "Выберите бренд");
             uniqueBrands.forEach(brand => {
                 this.addOption(this.brandSelect, brand, brand);
         });
@@ -163,8 +165,8 @@ class UI{
         selectElement.appendChild(option);
     }
 
-    filter() {
-        const priceValue = this.priceSelect.value;
+    async filter() {
+        const priceValue = parseFloat(this.priceSelect.value);
         const brandValue = this.brandSelect.value;
 
         const params = {
@@ -172,9 +174,15 @@ class UI{
             brand: brandValue
         };
 
-        const products = this.api.getProductsList(params);
-        this.renderHtml(products);
-    }
+        try {
+            const response = await this.api.fetchAPI("filter", params);
+            const productIds = response.result;
+            const products = await this.api.getProduct(productIds);
+            this.clearHTML()
+            this.renderHtml(products);
+        } catch (error) {
+            console.error("Error while filtering products:", error);
+        }
 }
-
+}
 export default UI;
