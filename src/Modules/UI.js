@@ -9,7 +9,7 @@ class UI{
         this.brandSelect = document.querySelector('.productBrand');
         this.applyFiltersButton = document.querySelector('.search-btn');
         this.currentPage = 0;
-        this.limit = 5;
+        this.limit = 50;
         this.nextPageButton = document.querySelector('.next-page');
         this.prevPageButton = document.querySelector('.back-page');
         this.nextPageButton.addEventListener('click', this.getNextPage.bind(this));
@@ -23,25 +23,26 @@ class UI{
                     const productElem = document.createElement("div");
                     productElem.classList.add("product");
     
-                    const brand = product.brand || "Нет информации";
+                    const brand = product.brand || "~";
                     const brandProduct = document.createElement("p");
-                    brandProduct.textContent = `Brand: ${brand}`;
+                    brandProduct.classList.add("brand");
+                    brandProduct.textContent = `Бренд: ${brand}`;
                     productElem.appendChild(brandProduct);
     
                     const nameProduct = document.createElement("p");
+                    nameProduct.classList.add("name");
                     nameProduct.textContent = product.product;
-    
                     productElem.appendChild(nameProduct);
-                    console.log("Name product:", nameProduct);
+
+                    const idProduct = document.createElement("p");
+                    idProduct.classList.add("id");
+                    idProduct.textContent = `ID: ${product.id}`;
+                    productElem.appendChild(idProduct);
     
                     const priceProduct = document.createElement("p");
-                    priceProduct.textContent = `${product.price}р`;
+                    priceProduct.classList.add("price");
+                    priceProduct.textContent = `Цена: ${product.price} ₽`;
                     productElem.appendChild(priceProduct);
-                    console.log("Price:", priceProduct);
-    
-                    const btnBuy = document.createElement("button");
-                    btnBuy.textContent = "Купить";
-                    productElem.appendChild(btnBuy);
     
                     this.container.appendChild(productElem);
                 })
@@ -54,15 +55,67 @@ class UI{
 
     async init() {
         try {
-            const responseIds = await this.api.getIDS();
-            const responseProducts = await this.api.getProduct(responseIds);
-            this.renderHtml(responseProducts);
-
-            await this.getUniqPriceSelect();
-            await this.getUniqBrandSelect();
+            const responseIds = await this.api.getIDS(); 
+            await this.renderPage(this.currentPage, this.limit, responseIds);
+            // await this.getUniqPriceSelect();
+            // await this.getUniqBrandSelect();
         } catch (error) {
             console.error("Error while retrieving data:", error);
         }
+    }
+
+ 
+    
+    async renderPage(page,limit){
+        try{
+            const offset = page * limit;
+            const responseIds = await this.api.getIDS(offset,limit)
+            const responseProducts = await this.api.getProduct(responseIds);
+            console.log("RENDER PAGE PRODUCTS:",responseProducts)
+            this.renderHtml(responseProducts);
+        } catch(error){
+            console.error("Error while retrieving data:", error);
+        }
+    }
+
+    async getNextPage() {
+        this.clearHTML()
+        try {
+            this.currentPage++;
+            const responseIds = await this.api.getIDS();
+            await this.renderPage(this.currentPage, this.limit, responseIds);
+            this.scrollTop();
+            
+            if (this.currentPage > 0) {
+                this.prevPageButton.style.display = "block";
+            } 
+        } catch (error) {
+            console.error("Error while getting next page:", error);
+        }
+    }
+
+    async getPrevPage() {
+        this.clearHTML()
+        if (this.currentPage > 0) {
+            try {
+                this.currentPage--;
+                await this.renderPage(this.currentPage, this.limit);
+                this.scrollTop();
+            } catch (error) {
+                console.error("Error while getting previous page:", error);
+            }
+        }
+        if (this.currentPage === 0) {
+            this.prevPageButton.style.display = "none";
+        }
+    }
+ 
+    clearHTML() {
+        this.container.innerHTML = '';
+    }
+
+    scrollTop() {
+        this.container.scrollIntoView({ behavior: 'smooth' });
     }
 
     async getUniqPriceSelect(){
@@ -88,9 +141,9 @@ class UI{
         try {
             const response = await this.api.fetchAPI("get_fields", { field: "brand" });
             const uniqueBrands = new Set();
-
+            // this.addOption(this.brandSelect, "", "Выберите бренд");
             response.result.forEach(brand => {
-                if (brand && brand !== "Нет информации") {
+                if (brand && brand !== "-") {
                     uniqueBrands.add(brand);
                 }
             });
@@ -121,47 +174,6 @@ class UI{
 
         const products = this.api.getProductsList(params);
         this.renderHtml(products);
-    }
-    
-    async getNextPage() {
-        try {
-            this.currentPage++;
-            const responseIds = await this.api.getIDS(this.currentPage);
-            const responseProducts = await this.api.getProduct(responseIds);
-            this.clearHTML()
-            this.renderHtml(responseProducts);
-            this.scrollTop();
-            if (this.currentPage > 0) {
-                this.prevPageButton.style.display = "block";
-            } 
-        } catch (error) {
-            console.error("Error while getting next page:", error);
-        }
-    }
-
-    async getPrevPage() {
-        if (this.currentPage > 0) {
-            try {
-                this.currentPage--;
-                const responseIds = await this.api.getIDS(this.currentPage);
-                const responseProducts = await this.api.getProduct(responseIds);
-                this.renderHtml(responseProducts);
-                this.scrollTop();
-            } catch (error) {
-                console.error("Error while getting previous page:", error);
-            }
-        }
-        if (this.currentPage === 0) {
-            this.prevPageButton.style.display = "none";
-        }
-    }
-    //
-    clearHTML() {
-        this.container.innerHTML = '';
-    }
-
-    scrollTop() {
-        this.container.scrollIntoView({ behavior: 'smooth' });
     }
 }
 

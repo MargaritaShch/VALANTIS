@@ -3,10 +3,14 @@
     padding: 0;
     color: rgb(217, 213, 213);
     font-family: 'Times New Roman', Times, serif;
+    
 }
 
-.header, .main, footer {
+body{
     background-color: rgba(0, 0, 0, 0.928);
+}
+main{
+    padding-top: 50px;
 }
 
 .header__logo {
@@ -21,21 +25,11 @@
 }
 
 .promo__image {
-    position: relative;
-    background-color: none;
     color: rgba(220, 228, 227, 0.977);
+    padding-top: 50px;
     
-    img {
-        width: 93%;
-        padding: 40px;
-        opacity: 0.6;
-    }
-
     h1 {
-        position: absolute;
-        top: 15%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        margin-top: 25%;
         font-size: 3em;
         letter-spacing: 3px;
         font-weight: bold;
@@ -43,17 +37,6 @@
         margin: 0;
     }
 
-    p {
-        position: absolute;
-        top: 20%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-style: italic;
-        font-size: 1.5em;
-        letter-spacing: 3px;
-        font-weight: bold;
-        margin: 0;
-    }
     @media (min-width: 992px) {
         h1 {
             font-size: 2.1em;
@@ -64,6 +47,7 @@
 .our-collection {
     font-family: "Montserrat", sans-serif;
     text-align: center;
+    padding-top: 60px;
     padding-bottom: 30px;
     letter-spacing: 3px;
     font-size: 30px;
@@ -71,7 +55,7 @@
 
 .filter {
     display: flex;
-    justify-content: left;
+    justify-content: center;
     margin-bottom: 20px;
     margin-left: 25px;
     padding: 30px;
@@ -80,8 +64,8 @@
 .productName, .productPrice,.productBrand {
     font-family: "Montserrat", sans-serif;
     background-color: black;
-    width: 200px;
-    height: 32px;
+    width: 300px;
+    height: 35px;
     padding-left: 10px;
     border: 0.5px solid rgba(128, 128, 128, 0.553);
     cursor: pointer;
@@ -90,13 +74,12 @@
     font-size: 16px;
 }
 .productPrice,.productBrand{
-    height: 34px;
+    height: 37px;
+    color: white;
 }
-
 
 .productName::after, .productPrice::after, .productBrand::after{
     border: 0.5px solid rgb(56, 54, 54);
-    
 }
 
 .search-btn {
@@ -109,13 +92,16 @@
     border: none;
     cursor: pointer;
     margin-left: 10px;
-    color: black;
+    color: rgb(13, 13, 13);
 }
 
 .search-name-btn:hover, .search-price-btn:hover {
     background: rgba(128, 128, 128, 0.404);
 }
-
+.price{
+    display: flex;
+    padding-top: 50px;
+}
 .btns {
     font-family: "Montserrat", sans-serif;
     display: flex;
@@ -124,12 +110,12 @@
 
     .next-page, .back-page {
         background: rgba(211, 209, 209, 0.404);
-        width: 200px;
+        width: 150px;
         height: 50px;
         border-radius: 20px;
         border: none;
         cursor: pointer;
-        font-size: 18px;
+        font-size: 38px;
         color: rgb(245, 239, 239);
         font-family: "Montserrat", sans-serif;
 
@@ -155,13 +141,17 @@
 .product {
     cursor: pointer;
     padding: 20px 20px 20px;
-    margin-bottom: 20px;
-    width: 222px;
+    margin-bottom: 25px;
+    margin-left: 50px;
+    width: 240px;
     height: 200px;
     border: none;
     border-radius: 20px;
     border: 0.5px solid rgba(211, 209, 209, 0.404);
 
+    &:hover{
+        background-color: rgba(240, 255, 255, 0.079);
+    }
     p {
         font-family: "Montserrat", sans-serif;
         color: rgb(206, 200, 200);
@@ -184,5 +174,26 @@
 
     button:hover {
         background: rgba(128, 128, 128, 0.404);
+    }
+
+     .brand {
+        
+        margin-bottom: 5px;
+    }
+    
+    .name {
+        font-weight: bold;
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+    
+   .id {
+        color: #777;
+        margin-bottom: 15px;
+        font-size: 13px;
+        text-align: left;
+    }
+    .price{
+        font-size: 16px;
     }
 }

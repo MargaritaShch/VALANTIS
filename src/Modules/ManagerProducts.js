@@ -6,7 +6,7 @@ class ManagerProducts{
         this.api = new API()
         this.UI = new UI()
         this.container = document.querySelector(container)
-        
+
     }
 
     async renderProducts() {

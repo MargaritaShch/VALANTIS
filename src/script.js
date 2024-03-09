@@ -6,11 +6,9 @@ import UI from "./Modules/UI.js";
 document.addEventListener("DOMContentLoaded", function () {
     const ui = new UI()
     ui.init()
-    const managerProducts = new ManagerProducts(".products-container", "Valantis"); 
-    managerProducts.renderProducts("get_items", []); 
+    // const managerProducts = new ManagerProducts(".products-container", "Valantis"); 
+    // managerProducts.renderProducts("get_items", []); 
 }) 
-
-
 
 
 
