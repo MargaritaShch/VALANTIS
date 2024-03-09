@@ -3,13 +3,13 @@
     padding: 0;
     color: rgb(217, 213, 213);
     font-family: 'Times New Roman', Times, serif;
-    
 }
 
-body{
+body {
     background-color: rgba(0, 0, 0, 0.928);
 }
-main{
+
+main {
     padding-top: 50px;
 }
 
@@ -27,7 +27,7 @@ main{
 .promo__image {
     color: rgba(220, 228, 227, 0.977);
     padding-top: 50px;
-    
+
     h1 {
         margin-top: 25%;
         font-size: 3em;
@@ -54,34 +54,79 @@ main{
 }
 
 .filter {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    justify-content: left;
     margin-bottom: 20px;
-    margin-left: 25px;
+    margin-left: 65px;
     padding: 30px;
+
+    .filter-settings {
+        display: flex;
+    }
+
+    .search-settings {
+        padding-bottom: 25px;
+
+        .productName {
+            font-family: "Montserrat", sans-serif;
+            background-color: black;
+            width: 290px;
+            height: 35px;
+            padding-left: 10px;
+            border: 0.5px solid rgba(128, 128, 128, 0.553);
+            cursor: pointer;
+            font-size: 20px;
+            outline: none;
+            font-size: 16px;
+            max-height: 50px;
+            overflow-y: auto;
+        }
+
+        .search-name-btn {
+            font-family: "Montserrat", sans-serif;
+            background: rgba(211, 209, 209, 0.404);
+            height: 35px;
+            width: 83px;
+            border-radius: 8px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            color: rgb(13, 13, 13);
+
+            &:hover {
+                background: rgba(128, 128, 128, 0.404);
+            }
+        }
+    }
 }
 
-.productName, .productPrice,.productBrand {
+.productPrice,
+.productBrand {
     font-family: "Montserrat", sans-serif;
     background-color: black;
-    width: 300px;
+    width: 250px;
     height: 35px;
     padding-left: 10px;
     border: 0.5px solid rgba(128, 128, 128, 0.553);
     cursor: pointer;
     font-size: 20px;
     outline: none;
-    font-size: 16px;
-    max-height: 50px; 
+    font-size: 14px;
+    max-height: 50px;
     overflow-y: auto;
-}
-.productPrice,.productBrand{
-   
+
     height: 37px;
     color: white;
 }
 
-.productName::after, .productPrice::after, .productBrand::after{
+.productPrice {
+    width: 150px;
+}
+
+.productName::after,
+.productPrice::after,
+.productBrand::after {
     border: 0.5px solid rgb(56, 54, 54);
 }
 
@@ -97,26 +142,29 @@ main{
     cursor: pointer;
     margin-left: 10px;
     color: rgb(13, 13, 13);
+
+    &:hover {
+        background: rgba(128, 128, 128, 0.404);
+    }
 }
 
-.search-name-btn:hover, .search-price-btn:hover {
-    background: rgba(128, 128, 128, 0.404);
-}
-.price{
+.price {
     display: flex;
     padding-top: 50px;
 }
 
-.erorr{
+.error {
     color: azure;
 }
+
 .btns {
     font-family: "Montserrat", sans-serif;
     display: flex;
     justify-content: center;
     padding: 20px;
 
-    .next-page, .back-page {
+    .next-page,
+    .back-page {
         background: rgba(211, 209, 209, 0.404);
         width: 150px;
         height: 50px;
@@ -131,11 +179,10 @@ main{
             background: rgba(128, 128, 128, 0.404);
         }
     }
-   
-}
 
-.back-page {
-    margin-right: 10px;
+    .back-page {
+        margin-right: 10px;
+    }
 }
 
 .products-container {
@@ -157,9 +204,10 @@ main{
     border-radius: 20px;
     border: 0.5px solid rgba(211, 209, 209, 0.404);
 
-    &:hover{
+    &:hover {
         background-color: rgba(240, 255, 255, 0.079);
     }
+
     p {
         font-family: "Montserrat", sans-serif;
         color: rgb(206, 200, 200);
@@ -172,19 +220,19 @@ main{
         background: rgba(211, 209, 209, 0.404);
         margin-left: 60px;
         margin-top: 50px;
-        margin-bottom: 10px ;
+        margin-bottom: 10px;
         height: 30px;
         width: 100px;
         border-radius: 10px;
         border: none;
-        cursor: pointer;  
+        cursor: pointer;
     }
 
     button:hover {
         background: rgba(128, 128, 128, 0.404);
     }
 
-     .brand {
+    .brand {
         
         margin-bottom: 5px;
     }

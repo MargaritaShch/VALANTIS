@@ -5,6 +5,7 @@ class UI{
         this.container = document.querySelector(".products-container");
         this.api = new API();
         this.nameInput = document.querySelector('.productName');
+        this.searchNameButton = document.querySelector('.search-name-btn');
         this.priceSelect = document.querySelector('.productPrice');
         this.brandSelect = document.querySelector('.productBrand');
         this.applyFiltersButton = document.querySelector('.search-btn');
@@ -17,6 +18,7 @@ class UI{
         this.prevPageButton.addEventListener('click', this.getPrevPage.bind(this));
         this.applyFiltersButton.addEventListener('click', this.filter.bind(this));
         this.deleteFilterButton.addEventListener('click', this.resetFilters.bind(this));
+        this.searchNameButton.addEventListener('click', this.searchByName.bind(this));
     }
 
     renderHtml(products){
@@ -47,8 +49,7 @@ class UI{
                     productElem.appendChild(priceProduct);
     
                     this.container.appendChild(productElem);
-                })
-               
+                })     
         } 
          else {
             console.error("Error: No products data received");
@@ -65,8 +66,6 @@ class UI{
             console.error("Error while retrieving data:", error);
         }
     }
-
- 
 
     async renderPage(page,limit){
         try{
@@ -111,14 +110,29 @@ class UI{
             this.prevPageButton.style.display = "none";
         }
     }
-    
+    async searchByName() {
+        const name = this.nameInput.value.trim(); 
+        if (name !== "") {
+            try {
+                const response = await this.api.fetchAPI("filter", { product: name });
+                const productIds = response.result;
+                const products = await this.api.getProduct(productIds);
+                this.clearHTML();
+                this.renderHtml(products);
+            } catch (error) {
+                console.error("Error while searching products by name:", error);
+            }
+        } else {
+            console.log("Please enter a product name.");
+        }
+    }
+
     resetFilters() {
         this.priceSelect.value = ""; 
         this.brandSelect.value = ""; 
         
         this.getUniqPriceSelect();
         this.getUniqBrandSelect();
-
         this.filter();
     }
 
@@ -141,7 +155,7 @@ class UI{
 
             const prices = Array.from(uniquePrices).sort((a, b) => a - b);
             
-            this.addOption(this.priceSelect, "", "Выберите цену");
+            this.addOption(this.priceSelect, "", "Цена");
             prices.forEach(price => {
                 this.addOption(this.priceSelect, price, price);
         });
@@ -161,7 +175,7 @@ class UI{
                     uniqueBrands.add(brand);
                 }
             });
-            this.addOption(this.brandSelect, "", "Выберите бренд");
+            this.addOption(this.brandSelect, "", "Бренд");
             uniqueBrands.forEach(brand => {
                 this.addOption(this.brandSelect, brand, brand);
         });
@@ -200,14 +214,12 @@ class UI{
             const productIds = response.result;
             const products = await this.api.getProduct(productIds);
 
-           
             this.clearHTML()
             this.renderHtml(products);
         } catch (error) {
             console.error("Error while filtering products:", error);
         }
-
         await this.renderPage(this.currentPage, this.limit);
-}
+    }
 }
 export default UI;

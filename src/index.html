@@ -25,11 +25,18 @@
         </section>
 
         <section class ="filter">
-            <input type="text" class="productName" placeholder="Название товара">
-            <select class="productPrice" name="Цена товара"></select>
-            <select class="productBrand" name="Бренд товара"></select>
-            <button class ="search-btn">Применить фильтры</button>
-            <button class ="delete-btn">Сбросить все фильтры</button>
+            <div class ="search-settings">
+                <input type="text" class="productName" placeholder="Название товара">
+                <button class ="search-name-btn">Искать</button>
+            </div>
+           
+            <div class="filter-settings">
+                <select class="productPrice" name="price"></select>
+                <select class="productBrand" name="brand"></select>
+                <button class ="search-btn">Применить фильтры</button>
+                <button class ="delete-btn">Сбросить все фильтры</button>
+            </div>
+           
         </section>
         <p class = "error"></p>
 
