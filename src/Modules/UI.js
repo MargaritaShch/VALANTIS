@@ -8,6 +8,7 @@ class UI{
         this.priceSelect = document.querySelector('.productPrice');
         this.brandSelect = document.querySelector('.productBrand');
         this.applyFiltersButton = document.querySelector('.search-btn');
+        this.deleteFilterButton = document.querySelector('.delete-btn')
         this.currentPage = 0;
         this.limit = 50;
         this.nextPageButton = document.querySelector('.next-page');
@@ -15,6 +16,7 @@ class UI{
         this.nextPageButton.addEventListener('click', this.getNextPage.bind(this));
         this.prevPageButton.addEventListener('click', this.getPrevPage.bind(this));
         this.applyFiltersButton.addEventListener('click', this.filter.bind(this));
+        this.deleteFilterButton.addEventListener('click', this.resetFilters.bind(this));
     }
 
     renderHtml(products){
@@ -65,7 +67,7 @@ class UI{
     }
 
  
-    
+
     async renderPage(page,limit){
         try{
             const offset = page * limit;
@@ -109,7 +111,17 @@ class UI{
             this.prevPageButton.style.display = "none";
         }
     }
- 
+    
+    resetFilters() {
+        this.priceSelect.value = ""; 
+        this.brandSelect.value = ""; 
+        
+        this.getUniqPriceSelect();
+        this.getUniqBrandSelect();
+
+        this.filter();
+    }
+
     clearHTML() {
         this.container.innerHTML = '';
     }
@@ -145,7 +157,7 @@ class UI{
             const uniqueBrands = new Set();
             
             response.result.forEach(brand => {
-                if (brand && brand !== null) {
+                if (brand && brand !== "~") {
                     uniqueBrands.add(brand);
                 }
             });
@@ -168,21 +180,34 @@ class UI{
     async filter() {
         const priceValue = parseFloat(this.priceSelect.value);
         const brandValue = this.brandSelect.value;
+        const params = {};
 
-        const params = {
-            price: priceValue,
-            brand: brandValue
-        };
+        if (priceValue && brandValue) {
+            params.price = priceValue;
+            params.brand = brandValue;
+        } 
+
+        else if (!priceValue && brandValue) {
+            params.brand = brandValue;
+        }
+    
+        else if (priceValue && !brandValue) {
+            params.price = priceValue;
+        }
 
         try {
             const response = await this.api.fetchAPI("filter", params);
             const productIds = response.result;
             const products = await this.api.getProduct(productIds);
+
+           
             this.clearHTML()
             this.renderHtml(products);
         } catch (error) {
             console.error("Error while filtering products:", error);
         }
+
+        await this.renderPage(this.currentPage, this.limit);
 }
 }
 export default UI;

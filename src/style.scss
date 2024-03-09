@@ -85,7 +85,8 @@ main{
     border: 0.5px solid rgb(56, 54, 54);
 }
 
-.search-btn {
+.search-btn,
+.delete-btn {
     font-family: "Montserrat", sans-serif;
     background: rgba(211, 209, 209, 0.404);
     height: 35px;
@@ -104,6 +105,10 @@ main{
 .price{
     display: flex;
     padding-top: 50px;
+}
+
+.erorr{
+    color: azure;
 }
 .btns {
     font-family: "Montserrat", sans-serif;
