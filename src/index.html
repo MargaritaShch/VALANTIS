@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
-    <title>Light-Shop</title>
+    <title>VALANTIS</title>
 </head>
 <body>
     <header class="header">
@@ -18,12 +18,7 @@
     </header>
     
     <main class="main">
-        <section class="promo">
-            <div class="promo__image">
-                <h1>JEWELLERY COLLECTION</h1>
-            </div>  
-        </section>
-        
+
         <div class = "wrapper-loader">
             <div class="loader"></div>
         </div>
@@ -35,13 +30,16 @@
             </div>
 
             <div class="filter-settings">
-                <select class="productPrice" name="price"></select>
-                <select class="productBrand" name="brand"></select>
+                <input list="priceOptions" class="productPrice" name="price" placeholder="Цена" type="number">
+                <datalist id="priceOptions"></datalist>
+            
+                <input list="brandOptions" class="productBrand" name="brand" placeholder="Бренд">
+                <datalist id="brandOptions"></datalist>
                 <button class ="search-btn">Применить фильтры</button>
                 <button class ="delete-btn">Сбросить все фильтры</button>
             </div>
         </section>
-
+        <p class="error" style="display: none;">ТОВАРЫ НЕ НАЙДЕНЫ</p>
         <section class="products-container"></section>
 
         <div class="pagination">

@@ -14,16 +14,6 @@ main {
   background-color: rgba(0, 0, 0, 0.928);
 }
 
-.header__logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  p {
-    font-size: 25px;
-    padding-top: 22px;
-  }
-}
 
 .promo__image {
   color: rgba(220, 228, 227, 0.977);
@@ -254,11 +244,19 @@ main {
     font-size: 16px;
   }
 }
+.error{
+  font-family: "Montserrat", sans-serif;
+  margin: auto;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  color: #777;
+}
 .wrapper-loader{
   position: absolute;
     top: 50%; 
     left: 50%; 
-    
+
   .loader {
     transform: translate(-50%, -50%);
     border: 16px solid #666464;

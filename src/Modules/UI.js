@@ -16,6 +16,7 @@ class UI{
         this.deleteFilterButton = document.querySelector('.delete-btn')
         this.currentPage = 0;
         this.limit = 50;
+        this.error = document.querySelector(".error")
         this.applyFiltersButton.addEventListener('click', this.filter.bind(this));
         this.deleteFilterButton.addEventListener('click', this.resetFilters.bind(this));
         this.searchNameButton.addEventListener('click', this.searchByName.bind(this));
@@ -63,8 +64,8 @@ class UI{
         }
         this.pagination.update(this.totalItems, this.limit);
         await this.renderPage(this.currentPage, this.limit);
-        // this.getUniqBrandSelect();
-        // this.getUniqPriceSelect()
+        this.getUniqueBrandOptions();
+        this.getUniquePriceOptions()
         this.loader.hide();
     }
 
@@ -89,8 +90,10 @@ class UI{
         if (name !== "") {
             try {
                 const response = await this.api.fetchAPI("filter", { product: name });
-                const productIds = response.result;
-                const products = await this.api.getProduct(productIds);
+                const products = await this.api.getProduct(response.result);
+                if(products.length === 0){
+                    this.error.style.display = "block"
+                }
                 this.clearHTML();
                 this.renderHtml(products);
             } catch (error) {
@@ -102,12 +105,17 @@ class UI{
     }
 
     resetFilters() {
-        this.priceSelect.value = ""; 
-        this.brandSelect.value = ""; 
-        
-        this.getUniqPriceSelect();
-        this.getUniqBrandSelect();
-        this.filter();
+        this.priceSelect.value = "";
+        this.brandSelect.value = "";
+
+        document.getElementById('priceOptions').innerHTML = '';
+        document.getElementById('brandOptions').innerHTML = '';
+
+        this.getUniqueBrandOptions();
+        this.getUniquePriceOptions();
+
+        this.currentPage = 0; 
+        this.renderPage(this.currentPage, this.limit);
     }
 
     clearHTML() {
@@ -118,44 +126,28 @@ class UI{
         this.container.scrollIntoView({ behavior: 'smooth' });
     }
 
-    async getUniqPriceSelect(){
-        try {
-            const response = await this.api.fetchAPI("get_fields", { field: "price" });
-            const uniquePrices = new Set();
+   async getUniquePriceOptions() {
+        const response = await this.api.fetchAPI("get_fields", { field: "price" });
+        const pricesDatalist = document.getElementById('priceOptions');
+        const sortedPrices = response.result.filter(price => price !== null).sort((a, b) => a - b);
 
-            response.result.forEach(price => {
-                uniquePrices.add(price);
-            });
-
-            const prices = Array.from(uniquePrices).sort((a, b) => a - b);
-            
-            this.addOption(this.priceSelect, "", "Цена");
-            prices.forEach(price => {
-                this.addOption(this.priceSelect, price, price);
+        sortedPrices.forEach(price => {
+            const option = document.createElement('option');
+            option.value = price;
+            pricesDatalist.appendChild(option);
         });
-        } catch (error) {
-            console.error("Error while populating price select:", error);
-        }
     }
 
-    async getUniqBrandSelect(){
-        try {
-            const response = await this.api.fetchAPI("get_fields", { field: "brand" });
-            console.log("БРЕНД Response :", response);
-            const uniqueBrands = new Set();
-            
-            response.result.forEach(brand => {
-                if (brand && brand !== "~") {
-                    uniqueBrands.add(brand);
-                }
-            });
-            this.addOption(this.brandSelect, "", "Бренд");
-            uniqueBrands.forEach(brand => {
-                this.addOption(this.brandSelect, brand, brand);
+    async getUniqueBrandOptions() {
+        const response = await this.api.fetchAPI("get_fields", { field: "brand" });
+        const brandsDatalist = document.getElementById('brandOptions');
+        const uniqueBrands = response.result.filter(brand => brand !== null);
+
+        uniqueBrands.forEach(brand => {
+            const option = document.createElement('option');
+            option.value = brand;
+            brandsDatalist.appendChild(option);
         });
-        } catch (error) {
-            console.error("Error while populating brand select:", error);
-        }
     }
 
     addOption(selectElement, value, text) {
@@ -166,24 +158,14 @@ class UI{
     }
 
     async filter() {
-        this.showLoader()
+        this.loader.show();
         const priceValue = parseFloat(this.priceSelect.value);
         const brandValue = this.brandSelect.value;
-        const params = {};
-
-        if (priceValue && brandValue) {
-            params.price = priceValue;
-            params.brand = brandValue;
-        } 
-
-        else if (!priceValue && brandValue) {
-            params.brand = brandValue;
+        const params = {
+            price: priceValue || undefined,
+            brand: brandValue || undefined
         }
-    
-        else if (priceValue && !brandValue) {
-            params.price = priceValue;
-        }
-
+     
         try {
             const response = await this.api.fetchAPI("filter", params);
             const productIds = response.result;
@@ -194,7 +176,7 @@ class UI{
         } catch (error) {
             console.error("Error while filtering products:", error);
         }
-        this.hideLoader()
+        this.loader.hide();
     }
 }
 export default UI;
