@@ -1,10 +1,12 @@
 import API from "../api/api";
 import Pagination from "./Pagination";
+import Loader from "./Loader";
 
 class UI{
     constructor(){
         this.api = new API();
         this.pagination = new Pagination(this);
+        this.loader = new Loader();
         this.container = document.querySelector(".products-container");
         this.nameInput = document.querySelector('.productName');
         this.searchNameButton = document.querySelector('.search-name-btn');
@@ -17,18 +19,7 @@ class UI{
         this.applyFiltersButton.addEventListener('click', this.filter.bind(this));
         this.deleteFilterButton.addEventListener('click', this.resetFilters.bind(this));
         this.searchNameButton.addEventListener('click', this.searchByName.bind(this));
-        this.init();
-        // this.loader = document.querySelector('.loader');
-        // this.hideLoader();
     }
-
-    // showLoader(){
-    //     this.loader.style.display = "block";
-    // }
-
-    // hideLoader(){
-    //     this.loader.style.display = "none";
-    // }
 
     renderHtml(products){
             if(products && products.length > 0){
@@ -66,14 +57,19 @@ class UI{
     }
 
     async init() {
+        this.loader.show();
         if (typeof this.totalItems === 'undefined') {
             this.totalItems = await this.api.getTotalItemsCount();
         }
         this.pagination.update(this.totalItems, this.limit);
         await this.renderPage(this.currentPage, this.limit);
+        // this.getUniqBrandSelect();
+        // this.getUniqPriceSelect()
+        this.loader.hide();
     }
 
     async renderPage(page,limit){
+        this.loader.show();
         try {
             const offset = page * limit;
             const responseIds = await this.api.getIDS(offset, limit);
@@ -85,6 +81,7 @@ class UI{
         } catch (error) {
             console.error("Error while rendering page:", error);
         }
+        this.loader.hide();
     }
 
     async searchByName() {
@@ -169,6 +166,7 @@ class UI{
     }
 
     async filter() {
+        this.showLoader()
         const priceValue = parseFloat(this.priceSelect.value);
         const brandValue = this.brandSelect.value;
         const params = {};
@@ -196,6 +194,7 @@ class UI{
         } catch (error) {
             console.error("Error while filtering products:", error);
         }
+        this.hideLoader()
     }
 }
 export default UI;
