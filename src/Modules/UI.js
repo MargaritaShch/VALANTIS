@@ -19,6 +19,16 @@ class UI{
         this.applyFiltersButton.addEventListener('click', this.filter.bind(this));
         this.deleteFilterButton.addEventListener('click', this.resetFilters.bind(this));
         this.searchNameButton.addEventListener('click', this.searchByName.bind(this));
+        this.loader = document.querySelector('.loader');
+        this.hideLoader();
+    }
+
+    showLoader(){
+        this.loader.style.display = "block";
+    }
+
+    hideLoader(){
+        this.loader.style.display = "none";
     }
 
     renderHtml(products){
@@ -57,29 +67,34 @@ class UI{
     }
 
     async init() {
+        this.showLoader()
         try {
-            const responseIds = await this.api.getIDS(); 
-            await this.renderPage(this.currentPage, this.limit, responseIds);
+            await this.renderPage(this.currentPage, this.limit);
             await this.getUniqPriceSelect();
             await this.getUniqBrandSelect();
         } catch (error) {
             console.error("Error while retrieving data:", error);
         }
+        this.hideLoader()
     }
 
     async renderPage(page,limit){
+        this.showLoader()
         try{
             const offset = page * limit;
             const responseIds = await this.api.getIDS(offset,limit)
             const responseProducts = await this.api.getProduct(responseIds);
             console.log("RENDER PAGE PRODUCTS:",responseProducts)
             this.renderHtml(responseProducts);
+            
         } catch(error){
             console.error("Error while retrieving data:", error);
         }
+        this.hideLoader()
     }
 
     async getNextPage() {
+        this.showLoader()
         this.clearHTML()
         try {
             this.currentPage++;
@@ -93,9 +108,11 @@ class UI{
         } catch (error) {
             console.error("Error while getting next page:", error);
         }
+        this.hideLoader()
     }
 
     async getPrevPage() {
+        this.showLoader()
         this.clearHTML()
         if (this.currentPage > 0) {
             try {
@@ -109,6 +126,7 @@ class UI{
         if (this.currentPage === 0) {
             this.prevPageButton.style.display = "none";
         }
+        this.hideLoader
     }
     async searchByName() {
         const name = this.nameInput.value.trim(); 
@@ -121,7 +139,7 @@ class UI{
                 this.renderHtml(products);
             } catch (error) {
                 console.error("Error while searching products by name:", error);
-            }
+            } 
         } else {
             console.log("Please enter a product name.");
         }
