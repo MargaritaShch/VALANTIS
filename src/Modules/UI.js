@@ -1,9 +1,11 @@
 import API from "../api/api";
+import Pagination from "./Pagination";
 
 class UI{
     constructor(){
-        this.container = document.querySelector(".products-container");
         this.api = new API();
+        this.pagination = new Pagination(this);
+        this.container = document.querySelector(".products-container");
         this.nameInput = document.querySelector('.productName');
         this.searchNameButton = document.querySelector('.search-name-btn');
         this.priceSelect = document.querySelector('.productPrice');
@@ -12,24 +14,21 @@ class UI{
         this.deleteFilterButton = document.querySelector('.delete-btn')
         this.currentPage = 0;
         this.limit = 50;
-        this.nextPageButton = document.querySelector('.next-page');
-        this.prevPageButton = document.querySelector('.back-page');
-        this.nextPageButton.addEventListener('click', this.getNextPage.bind(this));
-        this.prevPageButton.addEventListener('click', this.getPrevPage.bind(this));
         this.applyFiltersButton.addEventListener('click', this.filter.bind(this));
         this.deleteFilterButton.addEventListener('click', this.resetFilters.bind(this));
         this.searchNameButton.addEventListener('click', this.searchByName.bind(this));
-        this.loader = document.querySelector('.loader');
-        this.hideLoader();
+        this.init();
+        // this.loader = document.querySelector('.loader');
+        // this.hideLoader();
     }
 
-    showLoader(){
-        this.loader.style.display = "block";
-    }
+    // showLoader(){
+    //     this.loader.style.display = "block";
+    // }
 
-    hideLoader(){
-        this.loader.style.display = "none";
-    }
+    // hideLoader(){
+    //     this.loader.style.display = "none";
+    // }
 
     renderHtml(products){
             if(products && products.length > 0){
@@ -67,67 +66,27 @@ class UI{
     }
 
     async init() {
-        this.showLoader()
-        try {
-            await this.renderPage(this.currentPage, this.limit);
-            await this.getUniqPriceSelect();
-            await this.getUniqBrandSelect();
-        } catch (error) {
-            console.error("Error while retrieving data:", error);
+        if (typeof this.totalItems === 'undefined') {
+            this.totalItems = await this.api.getTotalItemsCount();
         }
-        this.hideLoader()
+        this.pagination.update(this.totalItems, this.limit);
+        await this.renderPage(this.currentPage, this.limit);
     }
 
     async renderPage(page,limit){
-        this.showLoader()
-        try{
-            const offset = page * limit;
-            const responseIds = await this.api.getIDS(offset,limit)
-            const responseProducts = await this.api.getProduct(responseIds);
-            console.log("RENDER PAGE PRODUCTS:",responseProducts)
-            this.renderHtml(responseProducts);
-            
-        } catch(error){
-            console.error("Error while retrieving data:", error);
-        }
-        this.hideLoader()
-    }
-
-    async getNextPage() {
-        this.showLoader()
-        this.clearHTML()
         try {
-            this.currentPage++;
-            const responseIds = await this.api.getIDS();
-            await this.renderPage(this.currentPage, this.limit, responseIds);
-            this.scrollTop();
-            
-            if (this.currentPage > 0) {
-                this.prevPageButton.style.display = "block";
-            } 
+            const offset = page * limit;
+            const responseIds = await this.api.getIDS(offset, limit);
+            const responseProducts = await this.api.getProduct(responseIds);
+            this.clearHTML();
+            this.renderHtml(responseProducts);
+            //update pagination
+            this.pagination.update(this.totalItems, this.limit);
         } catch (error) {
-            console.error("Error while getting next page:", error);
+            console.error("Error while rendering page:", error);
         }
-        this.hideLoader()
     }
 
-    async getPrevPage() {
-        this.showLoader()
-        this.clearHTML()
-        if (this.currentPage > 0) {
-            try {
-                this.currentPage--;
-                await this.renderPage(this.currentPage, this.limit);
-                this.scrollTop();
-            } catch (error) {
-                console.error("Error while getting previous page:", error);
-            }
-        }
-        if (this.currentPage === 0) {
-            this.prevPageButton.style.display = "none";
-        }
-        this.hideLoader
-    }
     async searchByName() {
         const name = this.nameInput.value.trim(); 
         if (name !== "") {
@@ -237,7 +196,6 @@ class UI{
         } catch (error) {
             console.error("Error while filtering products:", error);
         }
-        await this.renderPage(this.currentPage, this.limit);
     }
 }
 export default UI;
