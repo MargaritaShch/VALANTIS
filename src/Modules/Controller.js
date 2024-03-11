@@ -63,7 +63,7 @@ export default class Controller {
 
     async applyFilters() {
         const price = parseFloat(this.view.priceInput.value);
-        const brand = this.view.brandInput.value;
+        const brand = this.view.brandInput.value || null;
 
         this.view.showLoader();
         await this.model.applyFilters(price, brand);
