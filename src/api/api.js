@@ -2,7 +2,7 @@ import getPasswordHash from '../utils/authUtils.js';
 
 class API  {
     constructor(){
-        this.requestUrl = 'http://api.valantis.store:40000/';
+        this.requestUrl = 'https://api.valantis.store:41000/';
         this.totalItemsCountCache = null;
         this.idsCache = {}; 
         //set HTTP request headers
