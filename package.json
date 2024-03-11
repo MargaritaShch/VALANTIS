@@ -18,9 +18,9 @@
   "author": "marvshcherbakova@gmail.com",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MargaritaShch/light-shop/issues"
+    "url": "https://github.com/MargaritaShch/VALANTIS/issues"
   },
-  "homepage": "https://github.com/MargaritaShch/light-shop#readme",
+  "homepage": "git+https://github.com/MargaritaShch/VALANTIS.git",
   "devDependencies": {
     "eslint": "^8.57.0",
     "html-plugin": "^0.1.0",
