@@ -1,11 +1,11 @@
 export default class View {
     constructor() {
-        this.container = document.querySelector(".products-container");
+        this.container = document.querySelector('.products-container');
         this.loader = document.querySelector('.wrapper-loader'); 
-        this.filterSection = document.querySelector(".filter"); 
-        this.productsContainer = document.querySelector(".products-container"); 
-        this.paginationContainer = document.querySelector(".pagination");
-        this.error = document.querySelector(".error");
+        this.filterSection = document.querySelector('.filter'); 
+        this.productsContainer = document.querySelector('.products-container'); 
+        this.paginationContainer = document.querySelector('.pagination');
+        this.error = document.querySelector('.error');
         this.priceOptions = document.getElementById('priceOptions');
         this.brandOptions = document.getElementById('brandOptions');
         this.priceInput = document.querySelector('.productPrice'); 
@@ -39,43 +39,43 @@ export default class View {
     }
 
     showLoader() {
-        this.loader.style.display = "flex"; 
-        this.filterSection.style.display = "none"; 
-        this.productsContainer.style.display = "none"; 
-        this.paginationContainer.style.display = "none"; 
+        this.loader.style.display = 'flex'; 
+        this.filterSection.style.display = 'none'; 
+        this.productsContainer.style.display = 'none'; 
+        this.paginationContainer.style.display = 'none'; 
     }
 
     hideLoader() {
-        this.loader.style.display = "none"; 
-        this.filterSection.style.display = "grid"; 
-        this.productsContainer.style.display = "flex"; 
-        this.paginationContainer.style.display = "flex"; 
+        this.loader.style.display = 'none'; 
+        this.filterSection.style.display = 'grid'; 
+        this.productsContainer.style.display = 'flex'; 
+        this.paginationContainer.style.display = 'flex'; 
     }
 
     renderProducts(products) {
         this.clearHTML();
         products.forEach(product => {
-            const productElem = document.createElement("div");
-            productElem.classList.add("product");
+            const productElem = document.createElement('div');
+            productElem.classList.add('product');
     
-            const brand = product.brand || "~";
-            const brandProduct = document.createElement("p");
-            brandProduct.classList.add("brand");
+            const brand = product.brand || '~';
+            const brandProduct = document.createElement('p');
+            brandProduct.classList.add('brand');
             brandProduct.textContent = `Бренд: ${brand}`;
             productElem.appendChild(brandProduct);
     
-            const nameProduct = document.createElement("p");
-            nameProduct.classList.add("name");
+            const nameProduct = document.createElement('p');
+            nameProduct.classList.add('name');
             nameProduct.textContent = product.product;
             productElem.appendChild(nameProduct);
     
-            const idProduct = document.createElement("p");
-            idProduct.classList.add("id");
+            const idProduct = document.createElement('p');
+            idProduct.classList.add('id');
             idProduct.textContent = `ID: ${product.id}`;
             productElem.appendChild(idProduct);
     
-            const priceProduct = document.createElement("p");
-            priceProduct.classList.add("price");
+            const priceProduct = document.createElement('p');
+            priceProduct.classList.add('price');
             priceProduct.textContent = `Цена: ${product.price} ₽`;
             productElem.appendChild(priceProduct);
     
@@ -85,11 +85,11 @@ export default class View {
 
     showError(message) {
         this.error.textContent = message;
-        this.error.style.display = "block";
+        this.error.style.display = 'block';
     }
 
     hideError() {
-        this.error.style.display = "none";
+        this.error.style.display = 'none';
     }
 
     clearHTML() {

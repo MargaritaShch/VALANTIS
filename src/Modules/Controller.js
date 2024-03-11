@@ -1,5 +1,5 @@
-import Model from "./Model.js";
-import View from "./View.js";
+import Model from './Model.js';
+import View from './View.js';
 
 export default class Controller {
     constructor(model, view) {
@@ -51,13 +51,13 @@ export default class Controller {
 
     async searchByName() {
         const name = this.view.nameInput.value.trim();
-        if (name !== "") {
+        if (name !== '') {
             this.view.showLoader();
             await this.model.searchByName(name);
-            this.model.products.length > 0 ? this.view.renderProducts(this.model.products) : this.view.showError("Нет товаров с таким именем");
+            this.model.products.length > 0 ? this.view.renderProducts(this.model.products) : this.view.showError('Нет товаров с таким именем');
             this.view.hideLoader();
         } else {
-            this.view.showError("Введите название продукта");
+            this.view.showError('Введите название продукта');
         }
     }
 
@@ -77,5 +77,4 @@ export default class Controller {
         this.view.hideLoader();
     }
 }
-
 

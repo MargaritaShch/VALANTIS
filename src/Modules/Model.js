@@ -1,4 +1,4 @@
-import API from "../api/api.js";
+import API from '../api/api.js';
 
 export default class Model {
     constructor() {
@@ -22,7 +22,7 @@ export default class Model {
     }
 
     async searchByName(name) {
-        const response = await this.api.fetchAPI("filter", { product: name });
+        const response = await this.api.fetchAPI('filter', { product: name });
         this.products = await this.api.getProduct(response.result);
     }
 
@@ -31,12 +31,12 @@ export default class Model {
             price: price || undefined,
             brand: brand || undefined
         };
-        const response = await this.api.fetchAPI("filter", params);
+        const response = await this.api.fetchAPI('filter', params);
         this.products = await this.api.getProduct(response.result);
     }
 
     async getUniquePriceOptions() {
-        const response = await this.api.fetchAPI("get_fields", { field: "price" });
+        const response = await this.api.fetchAPI('get_fields', { field: 'price' });
         if (response && response.result) {
             const prices = response.result.filter(price => price !== null);
             const uniquePrices = [...new Set(prices)].sort((a, b) => a - b);
@@ -46,11 +46,11 @@ export default class Model {
     }
     
     async getUniqueBrandOptions() {
-        const response = await this.api.fetchAPI("get_fields", { field: "brand" });
+        const response = await this.api.fetchAPI('get_fields', { field: 'brand' });
         if (response && response.result) {
             const uniqueBrands = [...new Set(response.result.filter(brand => brand !== null))];
             return uniqueBrands;
         }
-        return []
+        return [];
     }
 }
