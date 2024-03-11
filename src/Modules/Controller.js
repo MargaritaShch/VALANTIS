@@ -14,7 +14,6 @@ export default class Controller {
     async initialize() {
         await this.model.initialize();
         await this.fetchAndDisplayProducts();
-        // await this.updateFilterOptions();
         this.view.setupFilter(this.handleFilterSelect.bind(this));
         this.updatePagination();
     }

@@ -30,7 +30,6 @@ class API  {
             return this.fetchAPI(action, params);
         }
     }
-
     //return all products and hash result
     async getTotalItemsCount() {
         if (this.totalItemsCountCache !== null) {
