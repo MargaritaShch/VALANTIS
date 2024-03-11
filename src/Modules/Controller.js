@@ -1,6 +1,3 @@
-import Model from './Model.js';
-import View from './View.js';
-
 export default class Controller {
     constructor(model, view) {
         this.model = model;
@@ -10,17 +7,35 @@ export default class Controller {
 
         this.setupEventListeners();
         this.initialize();
-        this.view.setupFilter();
+        // this.view.setupFilter();
+        this.view.setupFilter(this.handleFilterSelect.bind(this));
     }
 
     async initialize() {
         await this.model.initialize();
         await this.fetchAndDisplayProducts();
-        await this.updateFilterOptions();
+        // await this.updateFilterOptions();
+        this.view.setupFilter(this.handleFilterSelect.bind(this));
         this.updatePagination();
     }
 
+    handleFilterSelect(filterType) {
+        if (filterType === 'price') {
+            this.updatePriceOptions();
+        } else if (filterType === 'brand') {
+            this.updateBrandOptions();
+        }
+    }
+
+    async updatePriceOptions() {
+        const prices = await this.model.getUniquePriceOptions();
+        this.view.updatePriceOptions(prices);
+    }
     
+    async updateBrandOptions() {
+        const brands = await this.model.getUniqueBrandOptions();
+        this.view.updateBrandOptions(brands);
+    }
     async updateFilterOptions() {
         const prices = await this.model.getUniquePriceOptions();
         this.view.updatePriceOptions(prices); 

@@ -1,8 +1,6 @@
-import API from '../api/api.js';
-
 export default class Model {
-    constructor() {
-        this.api = new API();
+    constructor(api) {
+        this.api =api;
         this.totalItems = 0;
         this.products = [];
     }

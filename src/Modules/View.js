@@ -16,7 +16,7 @@ export default class View {
         this.searchNameButton = document.querySelector('.search-name-btn');
         this.filterSelect = document.getElementById('filterSelect');
     }
-    setupFilter() {
+    setupFilter(onFilterSelect) {
         this.filterSelect.addEventListener('change', () => {
 
             this.priceOptions.parentElement.style.display = 'none';
@@ -24,10 +24,11 @@ export default class View {
             this.applyFiltersButton.style.display = 'none';
             this.resetFiltersButton.style.display = 'none';
 
-       
             if (this.filterSelect.value === 'price') {
+                onFilterSelect('price');
                 this.priceOptions.parentElement.style.display = 'block';
             } else if (this.filterSelect.value === 'brand') {
+                onFilterSelect('brand');
                 this.brandOptions.parentElement.style.display = 'block';
             }
            

@@ -8,7 +8,6 @@ const getPasswordHash = (password) => {
     const day = String(currentDate.getDate()).padStart(2, '0'); 
     const timestamp = `${year}${month}${day}`;
     const string = `${password}_${timestamp}`;
-    console.log(string);
     
     return md5(string);
 };

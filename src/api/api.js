@@ -3,32 +3,31 @@ import getPasswordHash from '../utils/authUtils.js';
 class API  {
     constructor(){
         this.requestUrl = 'http://api.valantis.store:40000/';
-        this.password = 'Valantis';
         this.totalItemsCountCache = null;
         this.idsCache = {}; 
         //set HTTP request headers
         this.requestSettings = {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-Auth': getPasswordHash('Valantis'),
             }
         };
     }
     //send request: get action and params from API and create string format password
     async fetchAPI(action, params) {
-        console.log('Calling fetchAPI with action:', action, 'params:', params);
-        const XAUTH = getPasswordHash(this.password);
         const body = { action, params };
-        const requestSettings = { ...this.requestSettings, body: JSON.stringify(body), headers: { ...this.requestSettings.headers, 'X-Auth': XAUTH } };
-        console.log('RequestSettings', requestSettings);
+        const requestSettings = { ...this.requestSettings, body: JSON.stringify(body), headers: { ...this.requestSettings.headers} };
         try {
             const response = await fetch(this.requestUrl, requestSettings);
-            console.log('RESPONSE:', response);
+            if (!response.ok) {
+                throw new Error(await response.text());
+            }
             const data = await response.json();
-            console.log('DATA', data);
             return data;
         } catch (error) {
             console.error('Error while retrieving data:', error);
+            return this.fetchAPI(action, params);
         }
     }
 
@@ -39,9 +38,7 @@ class API  {
         }
         try {
             const response = await this.fetchAPI('get_ids', { offset: 0, limit: 8004 });
-            console.log('ALL PRODUCTS', response.result.length);
             this.totalItemsCountCache = response.result.length; //save in cash
-            console.log('CASH', this.totalItemsCountCache);
             return response.result.length;
         } catch (error) {
             console.error('Error while retrieving total items count:', error);
@@ -49,7 +46,7 @@ class API  {
         }
     }
 
-    async getProductsList(params) {
+    async getProductsList() {
         const ids = await this.getIDS();
         const products = await this.getProduct(ids);
         return products;
@@ -93,4 +90,5 @@ class API  {
         }
     }
 }
+
 export default API;
