@@ -1,10 +1,11 @@
 export default class View {
     constructor() {
         this.container = document.querySelector(".products-container");
-        this.loader = document.querySelector('.loader');
-        this.paginationContainer = document.querySelector('.pagination');
+        this.loader = document.querySelector('.wrapper-loader'); 
+        this.filterSection = document.querySelector(".filter"); 
+        this.productsContainer = document.querySelector(".products-container"); 
+        this.paginationContainer = document.querySelector(".pagination");
         this.error = document.querySelector(".error");
-        this.loader = document.querySelector('.loader');
         this.priceOptions = document.getElementById('priceOptions');
         this.brandOptions = document.getElementById('brandOptions');
         this.applyFiltersButton = document.querySelector('.search-btn');
@@ -14,12 +15,19 @@ export default class View {
     }
 
     showLoader() {
-        this.loader.style.display = "block";
+        this.loader.style.display = "flex"; 
+        this.filterSection.style.display = "none"; 
+        this.productsContainer.style.display = "none"; 
+        this.paginationContainer.style.display = "none"; 
     }
 
     hideLoader() {
-        this.loader.style.display = "none";
+        this.loader.style.display = "none"; 
+        this.filterSection.style.display = "grid"; 
+        this.productsContainer.style.display = "flex"; 
+        this.paginationContainer.style.display = "flex"; 
     }
+
     renderProducts(products) {
         this.clearHTML();
         products.forEach(product => {
@@ -64,36 +72,64 @@ export default class View {
         this.container.innerHTML = '';
     }
 
-    updatePagination(totalItems, itemsPerPage, currentPage, onPageChangeCallback) {
-        this.paginationContainer.innerHTML = ''; 
+    updatePagination(totalItems, itemsPerPage, currentPage, onPageChange) {
+        this.paginationContainer.innerHTML = '';
     
         const totalPages = Math.ceil(totalItems / itemsPerPage);
+        const startPage = Math.max(1, currentPage - 2);
+        const endPage = Math.min(totalPages, currentPage + 3);
     
-        const createPageButton = (pageNumber) => {
-            const button = document.createElement('button');
-            button.textContent = pageNumber + 1; 
-            button.disabled = pageNumber === currentPage;
-            button.addEventListener('click', () => onPageChangeCallback(pageNumber));
-            return button;
-        };
-    
-        //prev page
+        //button prev page
         if (currentPage > 0) {
-            const prevButton = createPageButton(currentPage - 1);
+            const prevButton = document.createElement('button');
             prevButton.textContent = '←';
+            prevButton.addEventListener('click', () => onPageChange(currentPage - 1));
             this.paginationContainer.appendChild(prevButton);
         }
     
-        //number pages
-        for (let i = 0; i < totalPages; i++) {
-            const pageButton = createPageButton(i);
+        //first page "..."
+        if (startPage > 1) {
+            const firstPageButton = document.createElement('button');
+            firstPageButton.textContent = '1';
+            firstPageButton.addEventListener('click', () => onPageChange(0));
+            this.paginationContainer.appendChild(firstPageButton);
+    
+            if (startPage > 2) {
+                const dots = document.createElement('span');
+                dots.textContent = '...';
+                this.paginationContainer.appendChild(dots);
+            }
+        }
+    
+        //namper ppages
+        for (let i = startPage; i <= endPage; i++) {
+            const pageButton = document.createElement('button');
+            pageButton.textContent = i;
+            pageButton.className = currentPage === i - 1 ? 'active' : '';
+            pageButton.disabled = currentPage === i - 1;
+            pageButton.addEventListener('click', () => onPageChange(i - 1));
             this.paginationContainer.appendChild(pageButton);
         }
     
-        //next page
+        //"..." and button last page
+        if (endPage < totalPages) {
+            if (endPage < totalPages - 1) {
+                const dots = document.createElement('span');
+                dots.textContent = '...';
+                this.paginationContainer.appendChild(dots);
+            }
+    
+            const lastPageButton = document.createElement('button');
+            lastPageButton.textContent = totalPages;
+            lastPageButton.addEventListener('click', () => onPageChange(totalPages - 1));
+            this.paginationContainer.appendChild(lastPageButton);
+        }
+    
+        //button next page
         if (currentPage < totalPages - 1) {
-            const nextButton = createPageButton(currentPage + 1);
+            const nextButton = document.createElement('button');
             nextButton.textContent = '→';
+            nextButton.addEventListener('click', () => onPageChange(currentPage + 1));
             this.paginationContainer.appendChild(nextButton);
         }
     }
@@ -141,3 +177,4 @@ export default class View {
             
     }
 }
+

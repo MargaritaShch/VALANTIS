@@ -5,6 +5,9 @@ export default class Controller {
     constructor(model, view) {
         this.model = model;
         this.view = view;
+        this.currentPage = 0;
+        this.itemsPerPage = 50;
+        
         this.setupEventListeners();
         this.initialize();
     }
@@ -13,6 +16,7 @@ export default class Controller {
         await this.model.initialize();
         await this.fetchAndDisplayProducts();
         await this.updateFilterOptions();
+        this.updatePagination();
     }
 
     async updateFilterOptions() {
@@ -29,11 +33,18 @@ export default class Controller {
         this.view.searchNameButton.addEventListener('click', () => this.searchByName());
     }
 
-    async fetchAndDisplayProducts(offset = 0, limit = 50) {
+    async fetchAndDisplayProducts(page = this.currentPage) {
         this.view.showLoader();
-        await this.model.fetchProducts(offset, limit);
+        this.currentPage = page;
+        const offset = this.currentPage * this.itemsPerPage;
+        await this.model.fetchProducts(offset, this.itemsPerPage);
         this.view.renderProducts(this.model.products);
+        this.updatePagination();
         this.view.hideLoader();
+    }
+
+    updatePagination() {
+        this.view.updatePagination(this.model.totalItems, this.itemsPerPage, this.currentPage, (page) => this.fetchAndDisplayProducts(page));
     }
 
     async searchByName() {
