@@ -18,7 +18,7 @@ Valantis Project - это веб-приложение для просмотра 
 
 ## Stack:
 <ul align ="start">
-  <li>JavaScript </li>
+  <li>JavaScript + Modules </li>
   <li>SCSS </li>
   <li>HTML </li>
 </ul>
