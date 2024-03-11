@@ -7,9 +7,10 @@ export default class Controller {
         this.view = view;
         this.currentPage = 0;
         this.itemsPerPage = 50;
-        
+
         this.setupEventListeners();
         this.initialize();
+        this.view.setupFilter();
     }
 
     async initialize() {

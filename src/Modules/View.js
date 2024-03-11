@@ -12,6 +12,28 @@ export default class View {
         this.resetFiltersButton = document.querySelector('.delete-btn');
         this.nameInput = document.querySelector('.productName');
         this.searchNameButton = document.querySelector('.search-name-btn');
+        this.filterSelect = document.getElementById('filterSelect');
+    }
+    setupFilter() {
+        this.filterSelect.addEventListener('change', () => {
+
+            this.priceOptions.parentElement.style.display = 'none';
+            this.brandOptions.parentElement.style.display = 'none';
+            this.applyFiltersButton.style.display = 'none';
+            this.resetFiltersButton.style.display = 'none';
+
+       
+            if (this.filterSelect.value === 'price') {
+                this.priceOptions.parentElement.style.display = 'block';
+            } else if (this.filterSelect.value === 'brand') {
+                this.brandOptions.parentElement.style.display = 'block';
+            }
+           
+            if (this.filterSelect.value) {
+                this.applyFiltersButton.style.display = 'inline-block';
+                this.resetFiltersButton.style.display = 'inline-block';
+            }
+        });
     }
 
     showLoader() {

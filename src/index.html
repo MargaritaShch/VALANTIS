@@ -28,18 +28,29 @@
                 <input type="text" class="productName" placeholder="Название товара">
                 <button class ="search-name-btn">Искать</button>
             </div>
-
-            <div class="filter-settings">
-                <input list="priceOptions" class="productPrice" name="price" placeholder="Цена" type="number">
-                <datalist id="priceOptions"></datalist>
+            <section class="filter">
+                <p>Фильтровать:</p>
+                <select id="filterSelect">
+                    <option value="">Выберите фильтр</option>
+                    <option value="price">По цене</option>
+                    <option value="brand">По бренду</option>
+                </select>
             
-                <input list="brandOptions" class="productBrand" name="brand" placeholder="Бренд">
-                <datalist id="brandOptions"></datalist>
-                <button class ="search-btn">Применить фильтр</button>
-                <button class ="delete-btn">Сбросить фильтр</button>
-            </div>
+                <div id="priceFilter" style="display: none;">
+                    <input list="priceOptions" class="productPrice" name="price" placeholder="Цена" type="number">
+                    <datalist id="priceOptions"></datalist>
+                </div>
+            
+                <div id="brandFilter" style="display: none;">
+                    <input list="brandOptions" class="productBrand" name="brand" placeholder="Бренд">
+                    <datalist id="brandOptions"></datalist>
+                </div>
+            
+                <button class="search-btn" style="display: none;">Применить фильтр</button>
+                <button class="delete-btn" style="display: none;">Сбросить фильтр</button>
+            </section>
         </section>
-        <p class="error" style="display: none;">ТОВАРЫ НЕ НАЙДЕНЫ</p>
+
         <section class="products-container"></section>
 
         <div class="pagination">
