@@ -1,12 +1,14 @@
 import './style.scss';
-import UI from "./Modules/UI.js";
+import API from './api/api.js'; 
+import Controller from './Modules/Controller.js';
+import Model from './Modules/Model.js';
+import View from './Modules/View.js';
 
-
-document.addEventListener("DOMContentLoaded", function () {
-    const ui = new UI()
-    ui.init()
-}) 
-
+document.addEventListener("DOMContentLoaded", () => {
+    const model = new Model(new API());
+    const view = new View();
+    new Controller(model, view);
+});
 
 
 
