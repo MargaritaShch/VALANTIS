@@ -71,7 +71,7 @@ class API  {
     async getProduct(ids) {
         try {
             const response = await this.fetchAPI('get_items', { ids });
-            console.log('GET_ITEMS:', response);
+         
             //filters uniqe ids
             const uniqueById = response.result.filter((function() {
                 const seenIds = new Set();
@@ -83,7 +83,6 @@ class API  {
                     return false;
                 };
             })());
-            console.log('UNIQUE_ITEMS:', uniqueById);
             return uniqueById;
         } catch (error) {
             console.error('Error while retrieving products:', error);
