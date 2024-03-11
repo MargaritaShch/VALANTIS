@@ -6,11 +6,11 @@
   "scripts": {
     "test": "test",
     "start": "webpack serve",
-    "build": "webpack"
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MargaritaShch/light-shop.git"
+    "url": "git+https://github.com/MargaritaShch/VALANTIS.git"
   },
   "keywords": [
     "shop"
@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/MargaritaShch/light-shop/issues"
   },
-  "homepage": "https://github.com/MargaritaShch/light-shop#readme",
+  "homepage": "https://github.com/MargaritaShch/VALANTIS",
   "devDependencies": {
     "eslint": "^8.57.0",
     "html-plugin": "^0.1.0",
