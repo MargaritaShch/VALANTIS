@@ -20,6 +20,7 @@ export default class Controller {
         this.updatePagination();
     }
 
+    
     async updateFilterOptions() {
         const prices = await this.model.getUniquePriceOptions();
         this.view.updatePriceOptions(prices); 
@@ -61,8 +62,9 @@ export default class Controller {
     }
 
     async applyFilters() {
-        const price = this.view.priceOptions.value;
-        const brand = this.view.brandOptions.value;
+        const price = parseFloat(this.view.priceInput.value);
+        const brand = this.view.brandInput.value;
+
         this.view.showLoader();
         await this.model.applyFilters(price, brand);
         this.view.renderProducts(this.model.products);

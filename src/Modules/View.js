@@ -8,6 +8,8 @@ export default class View {
         this.error = document.querySelector(".error");
         this.priceOptions = document.getElementById('priceOptions');
         this.brandOptions = document.getElementById('brandOptions');
+        this.priceInput = document.querySelector('.productPrice'); 
+        this.brandInput = document.querySelector('.productBrand'); 
         this.applyFiltersButton = document.querySelector('.search-btn');
         this.resetFiltersButton = document.querySelector('.delete-btn');
         this.nameInput = document.querySelector('.productName');
@@ -199,4 +201,3 @@ export default class View {
             
     }
 }
-
