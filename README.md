@@ -1,60 +1,53 @@
-# Valantis Project
-## Ссылка на проект: https://margaritashch.github.io/VALANTIS/
-(API недоступно)
+#  Valantis Project
 
-Valantis Project - это веб-приложение для просмотра и фильтрации продуктов, используя API Valantis. 
-Приложение включает в себя функциональность поиска по продуктам, фильтрацию по цене и бренду, а также пагинацию результатов.
+## Project Link: [Valantis](https://margaritashch.github.io/VALANTIS/)
+(API currently unavailable)
 
-#  Требования: 
-<ul align ="start">
-  <li>используя предоставленный апи создать страницу, которая отображает список товаров. </li>
-  <li>для каждого товара должен отображаться его id, название, цена и бренд. </li>
-  <li>выводить по 50 товаров на страницу с возможностью постраничного перехода (пагинация) в обе стороны. </li>
-  <li>возможность фильтровать выдачу используя предоставленное апи по названию, цене и бренду. </li>
-  <li>eсли API возвращает дубли по id, то следует их считать одним товаром и выводить только первый, даже если другие поля различаются.</li>
-  <li>eсли API возвращает ошибку, следует вывести идентификатор ошибки в консоль, если он есть и повторить запрос. </li>
-</ul>
+Valantis Project is a web application for viewing and filtering products using the Valantis API. The application includes features such as product search, filtering by price and brand, and pagination of results.
 
-## Докуменатция:
-<a href="https://github.com/ValantisJewelry/TestTaskValantis/blob/main/API.md"> Документация по работе с API</a>
+## Requirements
+- Use the provided API to create a page that displays a list of products.
+- Each product should display its id, name, price, and brand.
+- Display 50 products per page with pagination support for navigating both forwards and backwards.
+- Enable filtering of results using the provided API by name, price, and brand.
+- If the API returns duplicate ids, count them as a single product and display only the first one, even if other fields differ.
+- If the API returns an error, log the error identifier to the console, if available, and retry the request.
 
-## Stack:
-<ul align ="start">
-  <li>JavaScript + Modules </li>
-  <li>SCSS </li>
-  <li>HTML </li>
-</ul>
+## Documentation
+[API Documentation](https://github.com/ValantisJewelry/TestTaskValantis/blob/main/API.md)
 
-## Зависимости:
-<p>Проект использует следующие основные зависимости: </p>
+## Stack
+- **JavaScript + Modules**
+- **SCSS**
+- **HTML**
 
-<li>md5 для хеширования паролей.</li>
-<li>fetch API для выполнения HTTP-запросов к API.</p>
+## Dependencies
+The project uses the following key dependencies:
+- `md5` for password hashing.
+- `fetch API` for performing HTTP requests to the API.
 
-# Описание проекта
+## Project Description
+This project uses the Model-View-Controller (MVC) architectural pattern, which helps in clearly separating code into model, view, and controller. This approach simplifies dependency management, enhances scalability, and makes testing different parts of the application easier.
 
-В этом проекте используется архитектурный паттерн Model-View-Controller (MVC), который способствует чёткому разделению кода на модель, представление и контроллер. Этот подход упрощает управление зависимостями, повышает масштабируемость и облегчает тестирование различных частей приложения.
+### Why MVC was Chosen
 
-## Почему был выбран MVC
+- **Separation of Concerns:** MVC divides the application into three key components, making code management and testing easier.
+- **Development Flexibility:** Developers can work on the model, view, and controller simultaneously, speeding up the development process.
+- **Ease of Scaling:** Due to the clear separation, the application can be easily scaled by adding new features and changing logic without interfering with the user interface.
 
-- **Разделение ответственности:** MVC позволяет разделить приложение на три ключевых компонента, облегчая таким образом управление кодом и его тестирование.
-- **Гибкость в разработке:** Разработчики могут работать параллельно над моделью, представлением и контроллером, что ускоряет процесс разработки.
-- **Легкость масштабирования:** Благодаря чёткому разделению, приложение легко масштабируется за счёт добавления новых функций и изменения логики без вмешательства в пользовательский интерфейс.
+### Accomplishments
+- **Modularity:** The project is structured based on a modular approach, separating logic into models (Model), views (View), and controllers (Controller). This ensures clean code, easy maintenance, and scalability. Each module performs its task, reducing coupling and increasing the cohesion of system components.
+- **Data Caching:** To optimize performance and reduce the number of server requests, data caching of product ids and query results is implemented (`this.idsCache` and `this.totalItemsCountCache`). This speeds up repeated requests for data already obtained in previous sessions.
+- **Code Reusability:** Functionality is divided into reusable methods such as `fetchAPI`, `getUniquePriceOptions`, `getUniqueBrandOptions`, which simplifies code management and further maintenance.
+- **Pagination:** Products on the site are divided into pages, with 50 items per page.
+- **Filtering:** Filtering options by price and brand.
+- **Search:** Implemented search functionality for products by name.
 
-## Что было выполнено
-- **Модульность**: Проект структурирован на основе модульного подхода, разделяя логику на модели (Model), представления (View) и контроллеры (Controller). Это обеспечивает чистоту кода, упрощает его поддержку и расширяемость. Каждый модуль выполняет свою задачу, уменьшая связность и повышая коэзивность компонентов системы.
-- **Кэширование данных**: Для оптимизации производительности и сокращения количества обращений к серверу применяется кэширование идентификаторов товаров и результатов запросов (this.idsCache и this.totalItemsCountCache). Это ускоряет повторные запросы за данными, уже полученными в предыдущих сессиях.
--**Переиспользование кода**: Функциональность разделена на переиспользуемые методы, такие как fetchAPI, getUniquePriceOptions, getUniqueBrandOptions,что облегчает управление кодом и его дальнейшую поддержку.
-- **Пагинация**: Товары на сайте разделены на страницы по 50 элементов на каждой.
-- **Фильтрация**: Взмодности фильтрации по ценеи  бренду. 
-- **Поиск**: Реализован поиск товаров по названию.
-  
+### Problems and Solutions
 
-## Проблемы и решения
+- **Filtering without Pagination:** Currently, the API does not support pagination for filtered results.
 
-- **Фильтрация без пагинации**: В данный момент API не поддерживает пагинацию для отфильтрованных результатов.
-
-   Решение :
-  1. Хранение результатов фильтрации: Сохранять все полученные от API результаты фильтрации во внутреннем состоянии на стороне клиента. Это позволит управлять отображением данных без необходимости каждый раз обращаться к серверу.
-  2. Динамическая подгрузка данных: При большом объеме данных, можно рассмотреть вариант динамической подгрузки результатов фильтрации по мере прокрутки страницы или при переходе на следующую страницу пагинации
+   **Solution:**
+  1. **Store Filtering Results:** Save all API filtering results in the client's internal state. This allows for managing data display without needing to request the server each time.
+  2. **Dynamic Data Loading:** For large volumes of data, consider dynamically loading filtering results as the page scrolls or when moving to the next pagination page.
 
